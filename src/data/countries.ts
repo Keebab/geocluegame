@@ -910,9 +910,9 @@ export const countryClues: Record<string, Clue[]> = {
     { id: 3, text: 'Geography: Vast boreal forests and extensive Arctic tundra', difficulty: 3 },
     { id: 4, text: 'Exports Potash', difficulty: 4 },
     { id: 5, text: 'Cultural element: Known for its official policy of multiculturalism', difficulty: 5 },
-    { id: 6, text: 'Flag clue: Features a prominent leaf, unique among national flags', difficulty: 6 },
-    { id: 7, text: 'Trivia: Has more lakes than the rest of the world\'s lakes combined', difficulty: 7 },
-    { id: 8, text: 'Famous person: Justin Bieber', difficulty: 8 }
+    { id: 6, text: "Flag clue: Features a prominent leaf, unique among national flags", difficulty: 6 },
+    { id: 7, text: "Trivia: Has more lakes than the rest of the world's lakes combined", difficulty: 7 },
+    { id: 8, text: "Famous person: Justin Bieber", difficulty: 8 }
   ],
   'BR': [
     { id: 1, text: 'Has a coastline of 7,491 km', difficulty: 1 },
