@@ -905,14 +905,14 @@ export const countries: Country[] = [
 
 export const countryClues: Record<string, Clue[]> = {
   'CA': [
-    { id: 1, text: 'Has a coastline of 243,042 km', difficulty: 1 },
-    { id: 2, text: 'Shares borders with 1 other countries', difficulty: 2 },
-    { id: 3, text: 'Geography: Vast boreal forests and extensive Arctic tundra', difficulty: 3 },
+    { id: 1, text: 'Coastline: Longest coastline in the world', difficulty: 1 },
+    { id: 2, text: 'Borders: Only one land border (with the United States)', difficulty: 2 },
+    { id: 3, text: 'Geography: Second-largest country by land area', difficulty: 3 },
     { id: 4, text: 'Exports Potash', difficulty: 4 },
     { id: 5, text: 'Cultural element: Known for its official policy of multiculturalism', difficulty: 5 },
-    { id: 6, text: "Flag clue: Features a prominent leaf, unique among national flags", difficulty: 6 },
-    { id: 7, text: "Trivia: Has more lakes than the rest of the world's lakes combined", difficulty: 7 },
-    { id: 8, text: "Famous person: Justin Bieber", difficulty: 8 }
+    { id: 6, text: 'Flag clue: Features a prominent leaf, unique among national flags', difficulty: 6 },
+    { id: 7, text: 'Trivia: Has more lakes than the rest of the world\'s lakes combined', difficulty: 7 },
+    { id: 8, text: 'Famous person: Justin Bieber', difficulty: 8 }
   ],
   'BR': [
     { id: 1, text: 'Has a coastline of 7,491 km', difficulty: 1 },
