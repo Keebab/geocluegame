@@ -47,26 +47,9 @@ export default function Game() {
     setScore(null);
   }, [targetCountry]);
 
-  const calculateScore = (distance: number, numGuesses: number, timeRemaining?: number) => {
-    // Distance scoring: closer = more points
-    const distanceMultiplier = Math.max(0, 1 - (distance / 20000));
-    
-    // Guess count bonus: fewer guesses = more points
-    const guessMultiplier = Math.max(0.1, 1 - ((numGuesses - 1) / MAX_TRIES));
-    
-    // Time bonus for time attack mode
-    const timeBonus = timeRemaining ? Math.floor((timeRemaining / 300) * 500) : 0;
-    
-    // Clue penalty: more clues = fewer points
-    const clueMultiplier = Math.max(0.2, 1 - (currentClueIndex / clues.length));
-
-    const basePoints = Math.floor(BASE_POINTS * distanceMultiplier * guessMultiplier * clueMultiplier);
-    
-    return {
-      points: basePoints + timeBonus,
-      multiplier: +(distanceMultiplier * guessMultiplier * clueMultiplier).toFixed(2),
-      bonus: timeBonus
-    };
+  const calculateScore = (clueIndex: number) => {
+    // Base score is 1000, each clue reduces by 100
+    return Math.max(100, 1000 - (clueIndex * 100));
   };
 
   const handleModeChange = (newMode: 'daily' | 'practice' | 'timeAttack') => {
@@ -123,8 +106,12 @@ export default function Game() {
     setGuesses(newGuesses);
 
     if (guessedCountry === targetCountry) {
-      const newScore = calculateScore(distance, newGuesses.length, gameMode === 'timeAttack' ? timeLeft : undefined);
-      setScore(newScore);
+      const newScore = calculateScore(currentClueIndex);
+      setScore({
+        points: newScore,
+        multiplier: 1.00,
+        bonus: 0
+      });
       setGameWon(true);
     } else {
       setCurrentClueIndex(prev => {
@@ -199,12 +186,12 @@ export default function Game() {
               {clues[currentClueIndex]?.text || 'No more clues available!'}
             </p>
             <div className="mt-4 flex items-center gap-4 text-sm">
-              <span className="font-medium text-blue-400">
-                Clue {currentClueIndex + 1} of 8
-              </span>
-              <span className="text-slate-400">
-                Difficulty: {clues[currentClueIndex]?.difficulty || 0}/8
-              </span>
+              <div className="text-sm text-gray-600 mb-2">
+                Clue {currentClueIndex + 1} of 10
+              </div>
+              <div className="text-sm text-gray-600 mb-2">
+                Difficulty: {clues[currentClueIndex]?.difficulty || 0}/10
+              </div>
             </div>
           </div>
         </div>
