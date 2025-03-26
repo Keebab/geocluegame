@@ -7,9 +7,10 @@ import { countries } from '@/data/countries';
 interface CountrySearchProps {
   onSelect: (country: string) => void;
   disabled?: boolean;
+  guessedCountries: string[];
 }
 
-export default function CountrySearch({ onSelect, disabled = false }: CountrySearchProps) {
+export default function CountrySearch({ onSelect, disabled = false, guessedCountries = [] }: CountrySearchProps) {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -96,8 +97,8 @@ export default function CountrySearch({ onSelect, disabled = false }: CountrySea
                 key={country}
                 className={`p-2 cursor-pointer text-black hover:bg-slate-100 ${
                   index === highlightedIndex ? 'bg-slate-200' : ''
-                }`}
-                onClick={() => handleSelect(country)}
+                } ${guessedCountries.includes(country) ? 'line-through text-gray-400' : ''}`}
+                onClick={() => !guessedCountries.includes(country) && handleSelect(country)}
               >
                 {country}
               </li>

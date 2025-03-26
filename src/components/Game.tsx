@@ -199,7 +199,10 @@ export default function Game() {
 
       {!gameWon && !gameLost && (
         <div className="bg-slate-800 p-4 rounded-lg border border-slate-700">
-          <CountrySearch onSelect={handleGuess} />
+          <CountrySearch 
+            onSelect={handleGuess} 
+            guessedCountries={guesses.map(g => g.country)}
+          />
         </div>
       )}
 
