@@ -97,7 +97,7 @@ export default function CountrySearch({ onSelect, disabled = false, guessedCount
                 key={country}
                 className={`p-2 cursor-pointer text-black hover:bg-slate-100 ${
                   index === highlightedIndex ? 'bg-slate-200' : ''
-                } ${guessedCountries.includes(country) ? 'line-through text-gray-400' : ''}`}
+                } ${guessedCountries.includes(country) ? 'bg-red-100 text-red-600' : ''}`}
                 onClick={() => !guessedCountries.includes(country) && handleSelect(country)}
               >
                 {country}
