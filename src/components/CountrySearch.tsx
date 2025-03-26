@@ -42,6 +42,8 @@ export default function CountrySearch({ onSelect, disabled = false }: CountrySea
       e.preventDefault();
       if (highlightedIndex >= 0 && suggestions[highlightedIndex]) {
         handleSelect(suggestions[highlightedIndex]);
+      } else if (query && suggestions.length > 0) {
+        handleSelect(suggestions[0]);
       }
     }
   };
@@ -53,9 +55,16 @@ export default function CountrySearch({ onSelect, disabled = false }: CountrySea
     setHighlightedIndex(-1);
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (query && suggestions.length > 0) {
+      handleSelect(suggestions[0]);
+    }
+  };
+
   return (
     <div className="space-y-2">
-      <form onSubmit={(e) => { e.preventDefault(); }} className="relative">
+      <form onSubmit={handleSubmit} className="relative">
         <div className="flex gap-2">
           <input
             type="text"
@@ -69,9 +78,9 @@ export default function CountrySearch({ onSelect, disabled = false }: CountrySea
           />
           <button
             type="submit"
-            disabled={disabled || !query}
+            disabled={disabled || !query || suggestions.length === 0}
             className={`px-4 py-2 rounded-lg font-medium ${
-              disabled || !query
+              disabled || !query || suggestions.length === 0
                 ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
                 : 'bg-blue-500 text-white hover:bg-blue-600'
             }`}

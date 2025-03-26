@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import CountrySearch from './CountrySearch';
 import DistanceIndicator from './DistanceIndicator';
+import CongratulationsOverlay from './CongratulationsOverlay';
 import { useGameMode } from '../contexts/GameModeContext';
 import { countries, countryClues } from '../data/countries';
 
@@ -148,6 +149,14 @@ export default function Game() {
 
   return (
     <div className="space-y-6">
+      {gameWon && score && (
+        <CongratulationsOverlay
+          score={score}
+          guesses={guesses.length}
+          onTryAgain={handleTryAgain}
+        />
+      )}
+
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
           <div className="text-xl font-bold">
@@ -177,20 +186,28 @@ export default function Game() {
         </div>
       </div>
 
-      <div className="bg-slate-800 p-4 rounded-lg border border-slate-700">
-        <div className="flex justify-between items-center mb-2">
-          <h3 className="text-lg font-semibold">Current Clue:</h3>
-          <span className="text-sm text-slate-400">
+      <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-xl border-2 border-blue-500 shadow-lg">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-bold text-blue-400">Current Clue</h3>
+          <span className="text-sm font-medium text-slate-300 bg-slate-700 px-3 py-1 rounded-full">
             Tries: {guesses.length}/{MAX_TRIES}
           </span>
         </div>
-        <p>
-          {clues[currentClueIndex]?.text || 'No more clues available!'}
-          {' '}
-          <span className="text-sm text-slate-400">
-            (Clue {currentClueIndex + 1} of {clues.length})
-          </span>
-        </p>
+        <div className="bg-slate-800/50 p-6 rounded-lg border border-slate-700">
+          <div className="flex flex-col items-center text-center">
+            <p className="text-xl text-slate-100 leading-relaxed max-w-2xl">
+              {clues[currentClueIndex]?.text || 'No more clues available!'}
+            </p>
+            <div className="mt-4 flex items-center gap-4 text-sm">
+              <span className="font-medium text-blue-400">
+                Clue {currentClueIndex + 1} of {clues.length}
+              </span>
+              <span className="text-slate-400">
+                Difficulty: {clues[currentClueIndex]?.difficulty || 0}/8
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
 
       {!gameWon && !gameLost && (
@@ -212,26 +229,13 @@ export default function Game() {
         ))}
       </div>
 
-      {(gameWon || gameLost) && (
-        <div className={`p-4 rounded-lg text-center ${gameWon ? 'bg-green-500' : 'bg-red-500'}`}>
-          <h2 className="text-2xl font-bold">
-            {gameWon ? 'Congratulations!' : 'Game Over'}
-          </h2>
+      {gameLost && (
+        <div className="p-4 rounded-lg text-center bg-red-500">
+          <h2 className="text-2xl font-bold">Game Over</h2>
           <p className="mb-2">
-            {gameWon 
-              ? `You found the country in ${guesses.length} guesses!` 
-              : `The country was ${targetCountry}. Better luck next time!`}
+            The country was {targetCountry}. Better luck next time!
           </p>
-          {score && (
-            <div className="mb-4 text-lg">
-              <p>Score: {score.points} points</p>
-              <p className="text-sm">
-                (Multiplier: {score.multiplier}x
-                {score.bonus > 0 ? `, Time Bonus: +${score.bonus}` : ''})
-              </p>
-            </div>
-          )}
-          {(gameMode !== 'daily' || gameLost) && (
+          {(gameMode !== 'daily') && (
             <button 
               onClick={handleTryAgain}
               className="px-4 py-2 bg-white text-black rounded hover:bg-gray-100"
