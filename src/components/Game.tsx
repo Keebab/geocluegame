@@ -200,7 +200,7 @@ export default function Game() {
             </p>
             <div className="mt-4 flex items-center gap-4 text-sm">
               <span className="font-medium text-blue-400">
-                Clue {currentClueIndex + 1} of {clues.length}
+                Clue {currentClueIndex + 1} of 8
               </span>
               <span className="text-slate-400">
                 Difficulty: {clues[currentClueIndex]?.difficulty || 0}/8
